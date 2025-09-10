@@ -39,7 +39,7 @@
     <main>
         <section id="add-member">
             <h2>Add Member</h2>
-            <form>
+            <form id="memberForm">
                 <label for="name">Full Name:</label><br>
                 <input type="text" id="name" name="name" required><br><br>
                 <label for="description">Description:</label><br>
@@ -48,8 +48,64 @@
                 <button type="reset" class="btn btn-cancel">Cancel</button>
             </form>
         </section>
+        <section id="search-member">
+            <h2>Search Members</h2>
+            <input type="text" id="searchInput" placeholder="Search by name...">
+        </section>
+        <section id="member-list">
+            <h2>Member List</h2>
+            <ul id="membersUl"></ul>
+        </section>
         <p><a href="Dashboard.html">← Back to Dashboard</a></p>
     </main>
+<script>
+  // Member management code
+  let members = JSON.parse(localStorage.getItem('members')) || [];
+
+  function saveMembers() {
+    localStorage.setItem('members', JSON.stringify(members));
+  }
+
+  function renderMembers(filter = "") {
+    const ul = document.getElementById('membersUl');
+    ul.innerHTML = "";
+    members
+      .filter(m => m.name.toLowerCase().includes(filter.toLowerCase()))
+      .forEach((member, idx) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${member.name}</strong>: ${member.description}
+          <button onclick="deleteMember(${idx})" class="btn btn-delete">Delete</button>`;
+        ul.appendChild(li);
+      });
+  }
+
+  document.getElementById('memberForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const description = document.getElementById('description').value.trim();
+    if (name) {
+      members.push({ name, description });
+      saveMembers();
+      renderMembers(document.getElementById('searchInput').value);
+      this.reset();
+    }
+  });
+
+  window.deleteMember = function(idx) {
+    if (confirm("Delete this member?")) {
+      members.splice(idx, 1);
+      saveMembers();
+      renderMembers(document.getElementById('searchInput').value);
+    }
+  };
+
+  document.getElementById('searchInput').addEventListener('input', function() {
+    renderMembers(this.value);
+  });
+
+  // Initial render
+  renderMembers();
+</script>
 
     <!-- Footer -->
     <footer>
