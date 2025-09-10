@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Google Fonts Example (only Roboto is valid here) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1 id="greeting">Welcome to Your Dashboard</h1>
+    <p>Hello, User! Here’s your dashboard overview.</p>
+  </header>
+
+  <!-- Navigation Menu -->
+  <nav>
+    <ul>
+      <li><a href="index.html" aria-label="Dashboard Home">🏠</a> Dashboard</li>
+      <li><a href="members.html" aria-label="Members">👥</a> Members</li>
+      <li><a href="payments.html" aria-label="Payments">💳</a> Payments</li>
+      <li><a href="reports.html" aria-label="Reports">📊</a> Reports</li>
+      <li><a href="settings.html" aria-label="Settings">⚙️</a> Settings</li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Overview Section -->
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>This is the main area where you can see updates, stats, and shortcuts.</p>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats">
+      <h2>Quick Stats</h2>
+      <ul>
+        <li>Total Members: <span id="membersCount">0</span></li>
+        <li>Active Payments: <span id="paymentsCount">0</span></li>
+        <li>Reports Generated: <span id="reportsCount">0</span></li>
+      </ul>
+    </section>
+
+    <!-- Notifications -->
+    <section id="notifications">
+      <h2>Notifications</h2>
+      <p id="notification">No new notifications.</p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Dashboard System. All Rights Reserved.</p>
+  </footer>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      document.body.style.fontFamily = localStorage.getItem('dashboardFont') || "Roboto, Arial, Helvetica, sans-serif";
+      if (localStorage.getItem('dashboardDarkMode') === 'true') {
+        document.body.style.background = '#222';
+        document.body.style.color = '#fafafa';
+      } else {
+        document.body.style.background = localStorage.getItem('dashboardBgColor') || "#fafafa";
+        document.body.style.color = '#222';
+      }
+    });
+  </script>
+</body>
+</html>
+

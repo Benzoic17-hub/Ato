@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <!-- Google Fonts Example -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Lato&family=Open+Sans&family=Montserrat&family=Raleway&family=Merriweather&family=Oswald&family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Settings</h1>
+        <p>Customize your dashboard experience below.</p>
+    </header>
+    <main>
+        <section id="settings">
+            <h2>Font Change</h2>
+            <label for="fontSelect">Choose Font:</label>
+            <select id="fontSelect">
+                <option value="Arial, Helvetica, sans-serif">Arial</option>
+                <option value="Times New Roman, Times, serif">Times New Roman</option>
+                <option value="Courier, Courier New, monospace">Courier</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="Verdana, Geneva, sans-serif">Verdana</option>
+                <option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+                <option value="Trebuchet MS, sans-serif">Trebuchet MS</option>
+                <option value="Impact, Charcoal, sans-serif">Impact</option>
+                <option value="Lucida Console, Monaco, monospace">Lucida Console</option>
+                <option value="Lucida Sans, Lucida Grande, Lucida Sans Unicode, sans-serif">Lucida Sans</option>
+                <option value="Palatino, Palatino Linotype, serif">Palatino</option>
+                <option value="Comic Sans MS, cursive, sans-serif">Comic Sans MS</option>
+                <option value="Cambria, Cochin, Georgia, serif">Cambria</option>
+                <option value="Garamond, serif">Garamond</option>
+                <option value="Century Gothic, sans-serif">Century Gothic</option>
+                <option value="Futura, sans-serif">Futura</option>
+                <option value="Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Calibri</option>
+                <option value="'Roboto', Arial, sans-serif">Roboto</option>
+                <option value="'Poppins', Arial, sans-serif">Poppins</option>
+                <option value="'Lato', Arial, sans-serif">Lato</option>
+                <option value="'Open Sans', Arial, sans-serif">Open Sans</option>
+                <option value="'Montserrat', Arial, sans-serif">Montserrat</option>
+                <option value="'Raleway', Arial, sans-serif">Raleway</option>
+                <option value="'Merriweather', serif">Merriweather</option>
+                <option value="'Oswald', Arial, sans-serif">Oswald</option>
+                <option value="'Ubuntu', Arial, sans-serif">Ubuntu</option>
+            </select>
+        </section>
+        <section>
+            <h2>Dark Mode</h2>
+            <button type="button" id="darkModeBtn">Activate dark mode</button>
+        </section>
+        <section>
+            <h2>Customize Background</h2>
+            <input type="color" id="bgColorPicker" value="#fafafa">
+        </section>
+        <section>
+            <h2>Profile</h2>
+            <label for="profileName">Profile Name:</label>
+            <input type="text" id="profileName" name="profileName"><br><br>
+            <button type="submit" class="btn">Save profile</button>
+        </section>
+        <section>
+            <h2>Logout</h2>
+            <a href="signin.html"><button type="button">Logout</button></a>
+        </section>
+        <p><a href="Dashboard.html" class="back-link">← Back to Dashboard</a></p>
+    </main>
+
+<script>
+  // Font change
+  document.getElementById('fontSelect').addEventListener('change', function() {
+    document.body.style.fontFamily = this.value;
+    localStorage.setItem('dashboardFont', this.value);
+  });
+
+  // Dark mode toggle
+  let darkMode = localStorage.getItem('dashboardDarkMode') === 'true';
+  const darkModeBtn = document.getElementById('darkModeBtn');
+  const bgColorPicker = document.getElementById('bgColorPicker');
+
+  function applyDarkMode() {
+    if (darkMode) {
+      document.body.style.background = '#222';
+      document.body.style.color = '#fafafa';
+      darkModeBtn.textContent = 'Deactivate dark mode';
+    } else {
+      document.body.style.background = localStorage.getItem('dashboardBgColor') || bgColorPicker.value;
+      document.body.style.color = '#222';
+      darkModeBtn.textContent = 'Activate dark mode';
+    }
+  }
+
+  darkModeBtn.addEventListener('click', function() {
+    darkMode = !darkMode;
+    localStorage.setItem('dashboardDarkMode', darkMode);
+    applyDarkMode();
+  });
+
+  // Background color change
+  bgColorPicker.addEventListener('input', function() {
+    localStorage.setItem('dashboardBgColor', this.value);
+    if (!darkMode) {
+      document.body.style.background = this.value;
+    }
+  });
+
+  // On page load, apply saved settings
+  window.addEventListener('DOMContentLoaded', function() {
+    // Apply font
+    document.body.style.fontFamily = localStorage.getItem('dashboardFont') || "Arial, Helvetica, sans-serif";
+    // Apply dark mode or background color
+    if (localStorage.getItem('dashboardDarkMode') === 'true') {
+      document.body.style.background = '#222';
+      document.body.style.color = '#fafafa';
+    } else {
+      document.body.style.background = localStorage.getItem('dashboardBgColor') || "#fafafa";
+      document.body.style.color = '#222';
+    }
+  });
+</script>
+</body>
+</html>

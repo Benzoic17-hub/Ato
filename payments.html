@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Payments</title>
+        <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Payments</h1>
+        <p>Manage and record your payments below.</p>
+    </header>
+    <main>
+       <script>
+  window.addEventListener('DOMContentLoaded', function() {
+    document.body.style.fontFamily = localStorage.getItem('dashboardFont') || "Arial, Helvetica, sans-serif";
+    if (localStorage.getItem('dashboardDarkMode') === 'true') {
+      document.body.style.background = '#222';
+      document.body.style.color = '#fafafa';
+    } else {
+      document.body.style.background = localStorage.getItem('dashboardBgColor') || "#fafafa";
+      document.body.style.color = '#222';
+    }
+  });
+</script> 
+        <section>
+            <form>
+                <label for="payerName">Name:</label><br>
+                <input type="text" id="payerName" name="payerName" required><br><br>
+                <label for="amount">Amount:</label><br>
+                <input type="number" id="amount" name="amount" required><br><br>
+                <label for="method">Payment Method:</label><br>
+                <select id="method" name="method" required>
+                    <option value="Debit">Debit Card</option>
+                    <option value="cash">MoMo Wallet</option>
+                    <option value="Visa">Visa Card</option>
+                </select><br><br>
+                <button type="submit" class="btn">Save</button>
+                <button type="reset" class="btn btn-cancel">Cancel</button>
+            </form>
+        </section>
+        <p><a href="index.html">← Back to Dashboard</a></p>
+        <ul>
+            <li><a href="payments.html">💳 Payments</a></li>
+            <li><a href="reports.html">📊 Reports</a></li>
+        </ul>
+    </main>
+</body>
+</html>

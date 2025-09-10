@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Members</h1>
+        <p>Add and manage your members below.</p>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav>
+        <ul>
+            <li><a href="Dashboard.html">🏠 Dashboard</a></li>
+            <li><a href="members.html">👥 Members</a></li>
+            <li><a href="payment.html">💳 Payments</a></li>
+            <li><a href="reports.html">📊 Reports</a></li>
+            <li><a href="settings.html">⚙️ Settings</a></li>
+        </ul>
+    </nav>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    document.body.style.fontFamily = localStorage.getItem('dashboardFont') || "Arial, Helvetica, sans-serif";
+    if (localStorage.getItem('dashboardDarkMode') === 'true') {
+      document.body.style.background = '#222';
+      document.body.style.color = '#fafafa';
+    } else {
+      document.body.style.background = localStorage.getItem('dashboardBgColor') || "#fafafa";
+      document.body.style.color = '#222';
+    }
+  });
+</script>
+    <!-- Main Content -->
+    <main>
+        <section id="add-member">
+            <h2>Add Member</h2>
+            <form>
+                <label for="name">Full Name:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="description">Description:</label><br>
+                <textarea id="description" name="description" rows="4" cols="40"></textarea><br><br>
+                <button type="submit" class="btn">Save</button>
+                <button type="reset" class="btn btn-cancel">Cancel</button>
+            </form>
+        </section>
+        <p><a href="Dashboard.html">← Back to Dashboard</a></p>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Dashboard System. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
