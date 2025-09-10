@@ -139,7 +139,6 @@
         document.body.classList.add('text-gray-900');
         document.querySelector('#darkToggle').innerHTML = '<i class="fas fa-moon mr-2"></i> Dark Mode';
       }
-      // Display profile name if available
       const profileName = localStorage.getItem('profileName');
       if (profileName) {
         document.getElementById('welcomeMessage').textContent = `Welcome, ${profileName}`;
@@ -163,7 +162,6 @@
       });
       this.innerHTML = isDarkMode ? '<i class="fas fa-sun mr-2"></i> Light Mode' : '<i class="fas fa-moon mr-2"></i> Dark Mode';
       localStorage.setItem('dashboardDarkMode', isDarkMode);
-      console.log('Dark mode:', isDarkMode);
     });
 
     // Toggle between Sign In and Sign Up
@@ -225,7 +223,6 @@
       const confirmPassword = document.getElementById('confirm-password').value;
       const terms = document.getElementById('terms').checked;
 
-      // Validate email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         showToast('Please enter a valid email address.', true);
@@ -235,7 +232,6 @@
         document.getElementById('email').classList.remove('border-red-500');
       }
 
-      // Validate password strength
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
       if (!passwordRegex.test(password)) {
         showToast('Password must be at least 8 characters long and include an uppercase letter, lowercase letter, and number.', true);
@@ -258,11 +254,10 @@
         document.getElementById('confirm-password').classList.remove('border-red-500');
       }
 
-      // Save details in localStorage
       localStorage.setItem('username', username);
       localStorage.setItem('email', email);
       localStorage.setItem('password', password);
-      localStorage.setItem('profileName', username); // Set profile name for welcome message
+      localStorage.setItem('profileName', username);
       showToast('Sign Up Successful! You can now sign in.');
       toggleForms(true);
       this.reset();
@@ -275,14 +270,18 @@
       const password = document.getElementById('signin-password').value;
       const rememberMe = document.getElementById('rememberMe').checked;
 
+      console.log('Username:', username, 'Stored:', localStorage.getItem('username')); // Debug
+      console.log('Password:', password, 'Stored:', localStorage.getItem('password')); // Debug
+
       if (username === localStorage.getItem('username') && password === localStorage.getItem('password')) {
         if (rememberMe) {
           localStorage.setItem('rememberMe', 'true');
         } else {
           localStorage.removeItem('rememberMe');
         }
+        localStorage.setItem('isLoggedIn', 'true');
         showToast('Sign In Successful!');
-        window.location.href = 'index.html'; // Immediate redirect to dashboard
+        window.location.href = 'index.html';
       } else {
         showToast('Invalid username or password.', true);
         document.getElementById('signin-username').classList.add('border-red-500');
