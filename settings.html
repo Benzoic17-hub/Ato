@@ -1,122 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
-    <!-- Google Fonts Example -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Lato&family=Open+Sans&family=Montserrat&family=Raleway&family=Merriweather&family=Oswald&family=Ubuntu&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    position: relative;
+    overflow-x: hidden;
+  }
+  /* River background */
+  #riverBg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 1; /* Full opacity, unaffected by dark mode */
+  }
+  /* Cards container */
+  .card-bg {
+    background-color: var(--card-bg, rgba(255,255,255,0.85));
+    transition: background-color 0.3s;
+    z-index: 10;
+    position: relative;
+  }
+</style>
 </head>
-<body>
-    <header>
-        <h1>Settings</h1>
-        <p>Customize your dashboard experience below.</p>
-    </header>
-    <main>
-        <section id="settings">
-            <h2>Font Change</h2>
-            <label for="fontSelect">Choose Font:</label>
-            <select id="fontSelect">
-                <option value="Arial, Helvetica, sans-serif">Arial</option>
-                <option value="Times New Roman, Times, serif">Times New Roman</option>
-                <option value="Courier, Courier New, monospace">Courier</option>
-                <option value="Georgia, serif">Georgia</option>
-                <option value="Verdana, Geneva, sans-serif">Verdana</option>
-                <option value="Tahoma, Geneva, sans-serif">Tahoma</option>
-                <option value="Trebuchet MS, sans-serif">Trebuchet MS</option>
-                <option value="Impact, Charcoal, sans-serif">Impact</option>
-                <option value="Lucida Console, Monaco, monospace">Lucida Console</option>
-                <option value="Lucida Sans, Lucida Grande, Lucida Sans Unicode, sans-serif">Lucida Sans</option>
-                <option value="Palatino, Palatino Linotype, serif">Palatino</option>
-                <option value="Comic Sans MS, cursive, sans-serif">Comic Sans MS</option>
-                <option value="Cambria, Cochin, Georgia, serif">Cambria</option>
-                <option value="Garamond, serif">Garamond</option>
-                <option value="Century Gothic, sans-serif">Century Gothic</option>
-                <option value="Futura, sans-serif">Futura</option>
-                <option value="Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Calibri</option>
-                <option value="'Roboto', Arial, sans-serif">Roboto</option>
-                <option value="'Poppins', Arial, sans-serif">Poppins</option>
-                <option value="'Lato', Arial, sans-serif">Lato</option>
-                <option value="'Open Sans', Arial, sans-serif">Open Sans</option>
-                <option value="'Montserrat', Arial, sans-serif">Montserrat</option>
-                <option value="'Raleway', Arial, sans-serif">Raleway</option>
-                <option value="'Merriweather', serif">Merriweather</option>
-                <option value="'Oswald', Arial, sans-serif">Oswald</option>
-                <option value="'Ubuntu', Arial, sans-serif">Ubuntu</option>
-            </select>
-        </section>
-        <section>
-            <h2>Dark Mode</h2>
-            <button type="button" id="darkModeBtn">Activate dark mode</button>
-        </section>
-        <section>
-            <h2>Customize Background</h2>
-            <input type="color" id="bgColorPicker" value="#fafafa">
-        </section>
-        <section>
-            <h2>Profile</h2>
-            <label for="profileName">Profile Name:</label>
-            <input type="text" id="profileName" name="profileName"><br><br>
-            <button type="submit" class="btn">Save profile</button>
-        </section>
-        <section>
-            <h2>Logout</h2>
-            <a href="signin.html"><button type="button">Logout</button></a>
-        </section>
-        <p><a href="Dashboard.html" class="back-link">← Back to Dashboard</a></p>
-    </main>
-
+<body class="flex relative">
+<!-- River Background -->
+<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" id="riverBg" alt="River Background">
+<!-- Sidebar -->
+<aside class="w-64 bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-col z-20">
+  <div class="p-6">
+    <h2 class="text-2xl font-bold">My Website</h2>
+  </div>
+  <nav class="flex-1">
+    <ul class="space-y-2 p-4">
+      <li><a href="index.html" class="flex items-center p-3 hover:bg-indigo-600 rounded-lg"><i class="fas fa-home mr-3"></i> Dashboard</a></li>
+      <li><a href="members.html" class="flex items-center p-3 hover:bg-indigo-600 rounded-lg"><i class="fas fa-users mr-3"></i> Members</a></li>
+      <li><a href="payments.html" class="flex items-center p-3 hover:bg-indigo-600 rounded-lg"><i class="fas fa-credit-card mr-3"></i> Payments</a></li>
+      <li><a href="reports.html" class="flex items-center p-3 hover:bg-indigo-600 rounded-lg"><i class="fas fa-chart-bar mr-3"></i> Reports</a></li>
+      <li><a href="settings.html" class="flex items-center p-3 bg-indigo-600 rounded-lg"><i class="fas fa-cog mr-3"></i> Settings</a></li>
+    </ul>
+  </nav>
+</aside>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col ml-64 z-20 relative">
+  <!-- Header -->
+  <header class="card-bg shadow-sm p-6 flex justify-between items-center mt-6 mx-6 rounded-xl">
+    <h1 class="text-3xl font-semibold text-gray-900">Settings</h1>
+    <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+      <i class="fas fa-user text-gray-600 text-lg"></i>
+    </div>
+  </header>
+  <!-- Content -->
+  <main class="p-8 max-w-7xl mx-auto flex-1 space-y-8">
+    <p class="text-gray-600 text-lg">Customize your dashboard experience below.</p>
+    <!-- Success Message -->
+    <div id="successMessage" class="hidden bg-green-100 text-green-700 p-4 rounded-lg">
+      <p id="successText"></p>
+    </div>
+    <!-- Font Change -->
+    <div class="card-bg p-8 rounded-xl shadow-lg">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-900">Font Settings</h3>
+      <div class="max-w-md">
+        <label for="fontSelect" class="block text-sm font-medium text-gray-700 mb-2">Choose Font</label>
+        <select id="fontSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200">
+          <option value="Arial, Helvetica, sans-serif">Arial</option>
+          <option value="Times New Roman, Times, serif">Times New Roman</option>
+          <option value="Courier, Courier New, monospace">Courier</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="Verdana, Geneva, sans-serif">Verdana</option>
+          <option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+          <option value="Trebuchet MS, sans-serif">Trebuchet MS</option>
+          <option value="Impact, Charcoal, sans-serif">Impact</option>
+          <option value="Lucida Console, Monaco, monospace">Lucida Console</option>
+          <option value="Lucida Sans, Lucida Grande, Lucida Sans Unicode, sans-serif">Lucida Sans</option>
+          <option value="Palatino, Palatino Linotype, serif">Palatino</option>
+          <option value="Comic Sans MS, cursive, sans-serif">Comic Sans MS</option>
+          <option value="Cambria, Cochin, Georgia, serif">Cambria</option>
+          <option value="Garamond, serif">Garamond</option>
+          <option value="Century Gothic, sans-serif">Century Gothic</option>
+          <option value="Futura, sans-serif">Futura</option>
+          <option value="Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Calibri</option>
+          <option value="'Roboto', Arial, sans-serif">Roboto</option>
+          <option value="'Poppins', Arial, sans-serif">Poppins</option>
+          <option value="'Lato', Arial, sans-serif">Lato</option>
+          <option value="'Open Sans', Arial, sans-serif">Open Sans</option>
+          <option value="'Montserrat', Arial, sans-serif">Montserrat</option>
+          <option value="'Raleway', Arial, sans-serif">Raleway</option>
+          <option value="'Merriweather', serif">Merriweather</option>
+          <option value="'Oswald', Arial, sans-serif">Oswald</option>
+          <option value="'Ubuntu', Arial, sans-serif">Ubuntu</option>
+        </select>
+      </div>
+    </div>
+    <!-- Dark Mode -->
+    <div class="card-bg p-8 rounded-xl shadow-lg">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-900">Dark Mode</h3>
+      <button type="button" id="darkModeBtn" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-200">Activate Dark Mode</button>
+    </div>
+    <!-- Background Color -->
+    <div class="card-bg p-8 rounded-xl shadow-lg">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-900">Background Color</h3>
+      <input type="color" id="bgColorPicker" value="#ffffff" class="w-16 h-16 border border-gray-300 rounded-lg cursor-pointer">
+    </div>
+    <!-- Profile -->
+    <div class="card-bg p-8 rounded-xl shadow-lg">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-900">Profile</h3>
+      <div class="max-w-md">
+        <label for="profileName" class="block text-sm font-medium text-gray-700 mb-2">Profile Name</label>
+        <input type="text" id="profileName" name="profileName" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200">
+        <button type="button" id="saveProfileBtn" class="mt-4 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-200">Save Profile</button>
+      </div>
+    </div>
+    <!-- Logout -->
+    <div class="card-bg p-8 rounded-xl shadow-lg">
+      <h3 class="text-2xl font-semibold mb-6 text-gray-900">Logout</h3>
+      <a href="signin.html"><button type="button" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-all duration-200">Logout</button></a>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="card-bg p-6 text-center mx-6 rounded-xl mb-6">
+    <p class="text-gray-600">&copy; 2025 Dashboard System. All Rights Reserved.</p>
+  </footer>
+</div>
 <script>
+  // Load font
+  document.body.style.fontFamily = localStorage.getItem('dashboardFont') || "'Inter', sans-serif";
+  // Apply saved profile
+  const savedProfileName = localStorage.getItem('profileName');
+  if(savedProfileName){
+    document.getElementById('profileName').value = savedProfileName;
+  }
   // Font change
-  document.getElementById('fontSelect').addEventListener('change', function() {
+  document.getElementById('fontSelect').addEventListener('change', function(){
     document.body.style.fontFamily = this.value;
     localStorage.setItem('dashboardFont', this.value);
   });
-
-  // Dark mode toggle
-  let darkMode = localStorage.getItem('dashboardDarkMode') === 'true';
-  const darkModeBtn = document.getElementById('darkModeBtn');
-  const bgColorPicker = document.getElementById('bgColorPicker');
-
-  function applyDarkMode() {
-    if (darkMode) {
-      document.body.style.background = '#222';
-      document.body.style.color = '#fafafa';
-      darkModeBtn.textContent = 'Deactivate dark mode';
+  // Card background management
+  function applyCardBg(){
+    const cards = document.querySelectorAll('.card-bg');
+    const color = localStorage.getItem('dashboardBgColor') || '#ffffff';
+    if(localStorage.getItem('dashboardDarkMode') === 'true'){
+      cards.forEach(c => c.style.setProperty('--card-bg', 'rgba(31,41,55,0.85)'));
     } else {
-      document.body.style.background = localStorage.getItem('dashboardBgColor') || bgColorPicker.value;
-      document.body.style.color = '#222';
-      darkModeBtn.textContent = 'Activate dark mode';
+      cards.forEach(c => c.style.setProperty('--card-bg', color + 'cc')); // slight transparency
     }
   }
-
-  darkModeBtn.addEventListener('click', function() {
+  applyCardBg();
+  // Dark Mode toggle
+  let darkMode = localStorage.getItem('dashboardDarkMode') === 'true';
+  const darkBtn = document.getElementById('darkModeBtn');
+  darkBtn.textContent = darkMode ? 'Deactivate Dark Mode' : 'Activate Dark Mode';
+  darkBtn.addEventListener('click', ()=>{
     darkMode = !darkMode;
     localStorage.setItem('dashboardDarkMode', darkMode);
-    applyDarkMode();
+    applyCardBg();
+    darkBtn.textContent = darkMode ? 'Deactivate Dark Mode' : 'Activate Dark Mode';
   });
-
-  // Background color change
-  bgColorPicker.addEventListener('input', function() {
-    localStorage.setItem('dashboardBgColor', this.value);
-    if (!darkMode) {
-      document.body.style.background = this.value;
-    }
+  // Background color picker
+  const bgPicker = document.getElementById('bgColorPicker');
+  bgPicker.addEventListener('input', ()=>{
+    localStorage.setItem('dashboardBgColor', bgPicker.value);
+    applyCardBg();
   });
-
-  // On page load, apply saved settings
-  window.addEventListener('DOMContentLoaded', function() {
-    // Apply font
-    document.body.style.fontFamily = localStorage.getItem('dashboardFont') || "Arial, Helvetica, sans-serif";
-    // Apply dark mode or background color
-    if (localStorage.getItem('dashboardDarkMode') === 'true') {
-      document.body.style.background = '#222';
-      document.body.style.color = '#fafafa';
-    } else {
-      document.body.style.background = localStorage.getItem('dashboardBgColor') || "#fafafa";
-      document.body.style.color = '#222';
-    }
+  // Save profile
+  document.getElementById('saveProfileBtn').addEventListener('click', ()=>{
+    const name = document.getElementById('profileName').value.trim();
+    if(name){
+      localStorage.setItem('profileName', name);
+      const msg = document.getElementById('successMessage');
+      const text = document.getElementById('successText');
+      text.textContent = 'Profile name saved successfully!';
+      msg.classList.remove('hidden');
+      setTimeout(()=> msg.classList.add('hidden'), 3000);
+    } else alert('Please enter a profile name.');
   });
 </script>
 </body>

@@ -1,57 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports</title>
-     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Reports</h1>
-        <p>View and manage your transaction reports below.</p>
-    </header>
-
-    <main>
-        <section>
-            <form>
-                <label for="date">Date of Transaction</label><br>
-                <input type="date" id="date" name="date" required><br><br>
-                <button type="submit" class="btn">Save</button>
-                <button type="reset" class="btn btn-cancel">Cancel</button>
-            </form>
-        </section>
-        <section>
-            <h2>Saved Reports</h2>
-            <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2025-09-10</td>
-                        <td><button class="btn btn-delete">Delete</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <p><a href="index.html">← Back to Dashboard</a></p>
-    </main>
-    <script>
-  window.addEventListener('DOMContentLoaded', function() {
-    document.body.style.fontFamily = localStorage.getItem('dashboardFont') || "Arial, Helvetica, sans-serif";
-    if (localStorage.getItem('dashboardDarkMode') === 'true') {
-      document.body.style.background = '#222';
-      document.body.style.color = '#fafafa';
-    } else {
-      document.body.style.background = localStorage.getItem('dashboardBgColor') || "#fafafa";
-      document.body.style.color = '#222';
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
     }
-  });
-</script>
+
+    .content-box {
+      background: rgba(255, 255, 255, 0.85); /* transparent white */
+      backdrop-filter: blur(6px); /* glass effect */
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- Navbar -->
+  <header class="content-box m-4">
+    <h1 class="text-2xl font-bold text-gray-800 flex items-center">
+      <i class="fas fa-chart-bar mr-2 text-indigo-600"></i> Reports
+    </h1>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 m-4">
+    <div class="content-box overflow-x-auto">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Monthly Reports</h2>
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-indigo-600 text-white">
+            <th class="p-3 text-left">Report ID</th>
+            <th class="p-3 text-left">Title</th>
+            <th class="p-3 text-left">Date</th>
+            <th class="p-3 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b">
+            <td class="p-3">001</td>
+            <td class="p-3">Member Growth</td>
+            <td class="p-3">2025-08-15</td>
+            <td class="p-3 text-green-600 font-semibold">Completed</td>
+          </tr>
+          <tr class="border-b">
+            <td class="p-3">002</td>
+            <td class="p-3">Payment Summary</td>
+            <td class="p-3">2025-09-08</td>
+            <td class="p-3 text-yellow-600 font-semibold">In Progress</td>
+          </tr>
+          <tr>
+            <td class="p-3">003</td>
+            <td class="p-3">Annual Report</td>
+            <td class="p-3">2025-09-10</td>
+            <td class="p-3 text-blue-600 font-semibold">Pending</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="content-box m-4 text-center">
+    <p class="text-gray-700">&copy; 2025 Dashboard System. All Rights Reserved.</p>
+  </footer>
+
 </body>
 </html>

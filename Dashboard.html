@@ -1,73 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <!-- Google Fonts Example (only Roboto is valid here) -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: white;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.35); /* Original transparent overlay */
+      z-index: 0;
+    }
+    .main-content, .header, .footer, .section {
+      position: relative;
+      z-index: 1;
+    }
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .header, .footer, .section {
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+    .header, .footer {
+      padding: 0.5rem;
+    }
+    .section {
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    a {
+      color: white;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
-<body>
-
-  <!-- Header -->
-  <header>
-    <h1 id="greeting">Welcome to Your Dashboard</h1>
-    <p>Hello, User! Here’s your dashboard overview.</p>
-  </header>
-
-  <!-- Navigation Menu -->
-  <nav>
-    <ul>
-      <li><a href="index.html" aria-label="Dashboard Home">🏠</a> Dashboard</li>
-      <li><a href="members.html" aria-label="Members">👥</a> Members</li>
-      <li><a href="payments.html" aria-label="Payments">💳</a> Payments</li>
-      <li><a href="reports.html" aria-label="Reports">📊</a> Reports</li>
-      <li><a href="settings.html" aria-label="Settings">⚙️</a> Settings</li>
-    </ul>
-  </nav>
-
-  <!-- Main Content -->
-  <main>
-    <!-- Overview Section -->
-    <section id="overview">
-      <h2>Overview</h2>
-      <p>This is the main area where you can see updates, stats, and shortcuts.</p>
-    </section>
-
-    <!-- Stats Section -->
-    <section id="stats">
-      <h2>Quick Stats</h2>
-      <ul>
-        <li>Total Members: <span id="membersCount">0</span></li>
-        <li>Active Payments: <span id="paymentsCount">0</span></li>
-        <li>Reports Generated: <span id="reportsCount">0</span></li>
+<body class="flex h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-900 bg-opacity-70 text-white flex flex-col">
+    <div class="p-4">
+      <h2 class="text-xl font-bold">Dashboard</h2>
+    </div>
+    <nav class="flex-1">
+      <ul class="space-y-1 p-3">
+        <li><a href="index.html" class="flex items-center p-1.5 hover:bg-gray-800 rounded"><i class="fas fa-home mr-1"></i> Dashboard</a></li>
+        <li><a href="members.html" class="flex items-center p-1.5 hover:bg-gray-800 rounded"><i class="fas fa-users mr-1"></i> Members</a></li>
+        <li><a href="payments.html" class="flex items-center p-1.5 hover:bg-gray-800 rounded"><i class="fas fa-credit-card mr-1"></i> Payments</a></li>
+        <li><a href="reports.html" class="flex items-center p-1.5 hover:bg-gray-800 rounded"><i class="fas fa-chart-bar mr-1"></i> Reports</a></li>
+        <li><a href="settings.html" class="flex items-center p-1.5 hover:bg-gray-800 rounded"><i class="fas fa-cog mr-1"></i> Settings</a></li>
       </ul>
-    </section>
-
-    <!-- Notifications -->
-    <section id="notifications">
-      <h2>Notifications</h2>
-      <p id="notification">No new notifications.</p>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Dashboard System. All Rights Reserved.</p>
-  </footer>
+    </nav>
+  </aside>
+  <!-- Main Content -->
+  <div class="main-content flex flex-col">
+    <!-- Header -->
+    <header class="header shadow flex justify-between items-center">
+      <h1 class="text-lg font-semibold" id="greeting">Welcome, User</h1>
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-full bg-gray-600 bg-opacity-50 flex items-center justify-center">
+          <i class="fas fa-user text-sm"></i>
+        </div>
+      </div>
+    </header>
+    <!-- Content -->
+    <main class="p-2 flex-1 overflow-y-auto">
+      <section class="section">
+        <h3 class="text-base font-semibold mb-1">Overview</h3>
+        <p class="text-xs">Main area for updates, stats, and shortcuts.</p>
+      </section>
+      <section class="section">
+        <h3 class="text-base font-semibold mb-1">Quick Stats</h3>
+        <ul class="space-y-0.5 text-xs">
+          <li>Total Members: <span id="membersCount">0</span></li>
+          <li>Active Payments: <span id="paymentsCount">0</span></li>
+          <li>Reports Generated: <span id="reportsCount">0</span></li>
+        </ul>
+      </section>
+      <section class="section">
+        <h3 class="text-base font-semibold mb-1">Notifications</h3>
+        <p id="notification" class="text-xs">No new notifications.</p>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer class="footer shadow text-center">
+      <p class="text-xs">&copy; 2025 Dashboard System. All Rights Reserved.</p>
+    </footer>
+  </div>
   <script>
+    // Check authentication and set greeting
     window.addEventListener('DOMContentLoaded', function() {
-      document.body.style.fontFamily = localStorage.getItem('dashboardFont') || "Roboto, Arial, Helvetica, sans-serif";
-      if (localStorage.getItem('dashboardDarkMode') === 'true') {
-        document.body.style.background = '#222';
-        document.body.style.color = '#fafafa';
+      const username = localStorage.getItem('username');
+      if (!username) {
+        document.getElementById('greeting').textContent = 'Welcome, Guest';
       } else {
-        document.body.style.background = localStorage.getItem('dashboardBgColor') || "#fafafa";
-        document.body.style.color = '#222';
+        document.getElementById('greeting').textContent = `Welcome, ${username}`;
       }
     });
   </script>
 </body>
 </html>
-
