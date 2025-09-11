@@ -13,69 +13,91 @@
       background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
       background-attachment: fixed;
       min-height: 100vh;
+      transition: color 0.5s ease;
     }
-
-    .content-box {
-      background: rgba(255, 255, 255, 0.85); /* transparent white */
-      backdrop-filter: blur(6px); /* glass effect */
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    .container, main, header, footer {
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(6px);
+      border-radius: 8px;
+      padding: 0.5rem;
+      margin: 0.5rem;
     }
   </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex h-screen text-gray-900">
 
-  <!-- Navbar -->
-  <header class="content-box m-4">
-    <h1 class="text-2xl font-bold text-gray-800 flex items-center">
-      <i class="fas fa-chart-bar mr-2 text-indigo-600"></i> Reports
-    </h1>
-  </header>
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white flex flex-col">
+    <div class="p-6">
+      <h2 class="text-2xl font-bold">Dashboard</h2>
+    </div>
+    <nav class="flex-1">
+      <ul class="space-y-2 p-4">
+        <li><a href="index.html" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-home mr-2"></i> Dashboard</a></li>
+        <li><a href="members.html" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-users mr-2"></i> Members</a></li>
+        <li><a href="payments.html" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-credit-card mr-2"></i> Payments</a></li>
+        <li><a href="reports.html" class="flex items-center p-2 bg-gray-700 rounded"><i class="fas fa-chart-bar mr-2"></i> Reports</a></li>
+        <li><a href="settings.html" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-cog mr-2"></i> Settings</a></li>
+        <li><a href="signin.html" class="flex items-center p-2 hover:bg-gray-700 rounded"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 m-4">
-    <div class="content-box overflow-x-auto">
-      <h2 class="text-xl font-semibold mb-4 text-gray-800">Monthly Reports</h2>
-      <table class="w-full border-collapse">
-        <thead>
-          <tr class="bg-indigo-600 text-white">
-            <th class="p-3 text-left">Report ID</th>
-            <th class="p-3 text-left">Title</th>
-            <th class="p-3 text-left">Date</th>
-            <th class="p-3 text-left">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b">
-            <td class="p-3">001</td>
-            <td class="p-3">Member Growth</td>
-            <td class="p-3">2025-08-15</td>
-            <td class="p-3 text-green-600 font-semibold">Completed</td>
-          </tr>
-          <tr class="border-b">
-            <td class="p-3">002</td>
-            <td class="p-3">Payment Summary</td>
-            <td class="p-3">2025-09-08</td>
-            <td class="p-3 text-yellow-600 font-semibold">In Progress</td>
-          </tr>
-          <tr>
-            <td class="p-3">003</td>
-            <td class="p-3">Annual Report</td>
-            <td class="p-3">2025-09-10</td>
-            <td class="p-3 text-blue-600 font-semibold">Pending</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
+  <div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md shadow p-4 flex justify-between items-center rounded-lg m-4">
+      <h1 class="text-2xl font-semibold text-gray-800"><i class="fas fa-chart-bar mr-2 text-indigo-600"></i> Reports</h1>
+      <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+        <i class="fas fa-user text-gray-600"></i>
+      </div>
+    </header>
 
-  <!-- Footer -->
-  <footer class="content-box m-4 text-center">
-    <p class="text-gray-700">&copy; 2025 Dashboard System. All Rights Reserved.</p>
-  </footer>
+    <!-- Main Section -->
+    <main class="flex-1 overflow-x-auto m-4">
+      <div class="container">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Monthly Reports</h2>
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="bg-indigo-600 text-white">
+              <th class="p-3 text-left">Report ID</th>
+              <th class="p-3 text-left">Title</th>
+              <th class="p-3 text-left">Date</th>
+              <th class="p-3 text-left">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="p-3">001</td>
+              <td class="p-3">Member Growth</td>
+              <td class="p-3">2025-08-15</td>
+              <td class="p-3 text-green-600 font-semibold">Completed</td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-3">002</td>
+              <td class="p-3">Payment Summary</td>
+              <td class="p-3">2025-09-08</td>
+              <td class="p-3 text-yellow-600 font-semibold">In Progress</td>
+            </tr>
+            <tr>
+              <td class="p-3">003</td>
+              <td class="p-3">Annual Report</td>
+              <td class="p-3">2025-09-10</td>
+              <td class="p-3 text-blue-600 font-semibold">Pending</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white/80 backdrop-blur-md shadow p-2 mt-auto rounded-lg m-4 text-center">
+      <p class="text-gray-600">&copy; 2025 Dashboard System. All Rights Reserved.</p>
+    </footer>
+  </div>
 
 </body>
 </html>
