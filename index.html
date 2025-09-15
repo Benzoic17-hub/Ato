@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,35 +23,6 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .toast { animation: slideIn 0.5s ease forwards; }
     @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-    /* Stylish dark mode for form sections */
-    .dark-mode .form-section {
-      background: linear-gradient(135deg, #2c3e50, #3498db); /* Elegant gradient */
-      color: #ffffff; /* White text */
-      border: 2px solid #2980b9; /* Stylish blue border */
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-      border-radius: 10px; /* Rounded corners */
-      padding: 15px; /* Increased padding for a premium feel */
-    }
-
-    /* Adjust input fields within dark mode form sections */
-    .dark-mode .form-section input,
-    .dark-mode .form-section select,
-    .dark-mode .form-section textarea {
-      background-color: #ecf0f1; /* Light gray background */
-      color: #2c3e50; /* Dark text for contrast */
-      border: 1px solid #bdc3c7; /* Light border */
-      border-radius: 5px; /* Matching rounded corners */
-    }
-
-    .dark-mode .form-section input::placeholder {
-      color: #7f8c8d; /* Muted gray placeholder */
-    }
-
-    /* Ensure container remains white in dark mode */
-    .dark-mode .container {
-      background-color: white;
-    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-center items-center text-gray-900">
@@ -141,7 +113,20 @@
   <script>
     // Dark mode toggle
     document.getElementById('darkToggle').addEventListener('click', function() {
-      const isDark = document.body.classList.toggle('dark-mode');
+      const container = document.querySelector('.container');
+      const isDark = !container.classList.contains('bg-gray-900');
+      container.classList.toggle('bg-white', !isDark);
+      container.classList.toggle('bg-gray-900', isDark);
+      document.body.classList.toggle('text-gray-900', !isDark);
+      document.body.classList.toggle('text-white', isDark);
+      document.querySelectorAll('.text-gray-700').forEach(el => {
+        el.classList.toggle('text-gray-700', !isDark);
+        el.classList.toggle('text-gray-200', isDark);
+      });
+      document.querySelectorAll('.text-gray-600').forEach(el => {
+        el.classList.toggle('text-gray-600', !isDark);
+        el.classList.toggle('text-gray-300', isDark);
+      });
       this.innerHTML = isDark ? '<i class="fas fa-sun mr-2"></i> Light Mode' : '<i class="fas fa-moon mr-2"></i> Dark Mode';
     });
 
@@ -176,7 +161,7 @@
       toggle.addEventListener('click', () => {
         const isPassword = input.type === 'password';
         input.type = isPassword ? 'text' : 'password';
-        toggle.innerHTML = `<i class="fas ${isPassword ? 'fa-eye-slash' : 'fa-eye'}"></i>`;
+        toggle.innerHTML = <i class="fas ${isPassword ? 'fa-eye-slash' : 'fa-eye'}"></i>;
       });
     }
 
