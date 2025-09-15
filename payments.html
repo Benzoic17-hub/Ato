@@ -137,20 +137,55 @@
       });
 
       document.querySelectorAll('.editBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const index = btn.dataset.index;
-          const pay = payments[index];
-          const newName = prompt('Edit Name', pay.name);
-          const newAmount = prompt('Edit Amount', pay.amount);
-          const newMethod = prompt('Edit Method', pay.method);
-          const newDate = prompt('Edit Date', pay.date);
-          if(newName && newAmount && newMethod && newDate){
-            payments[index] = {name:newName, amount:newAmount, method:newMethod, date:newDate};
-            localStorage.setItem('payments', JSON.stringify(payments));
-            displayPayments(searchPayment.value);
-          }
-        });
-      });
+  btn.addEventListener('click', () => {
+    const row = btn.closest("tr");
+    const cells = row.querySelectorAll("td");
+    const index = btn.dataset.index;
+
+    // Save old values
+    let oldValues = [...cells].map(cell => cell.textContent);
+
+    // Make editable (except actions column)
+    for (let i = 0; i < cells.length - 1; i++) {
+      cells[i].contentEditable = "true";
+      cells[i].classList.add("bg-gray-700");
+    }
+
+    // Hide Edit, show Save + Cancel
+    btn.classList.add("hidden");
+    const saveBtn = document.createElement("button");
+    saveBtn.className = "bg-green-500 hover:bg-green-600 text-white px-2 rounded saveBtn";
+    saveBtn.textContent = "Save";
+    const cancelBtn = document.createElement("button");
+    cancelBtn.className = "bg-gray-500 hover:bg-gray-600 text-white px-2 rounded cancelBtn";
+    cancelBtn.textContent = "Cancel";
+    row.children[4].appendChild(saveBtn);
+    row.children[4].appendChild(cancelBtn);
+
+    // Save changes
+    saveBtn.addEventListener("click", () => {
+      payments[index] = {
+        name: cells[0].textContent,
+        amount: cells[1].textContent,
+        method: cells[2].textContent,
+        date: cells[3].textContent
+      };
+      localStorage.setItem('payments', JSON.stringify(payments));
+      displayPayments(searchPayment.value);
+    });
+
+    // Cancel changes
+    cancelBtn.addEventListener("click", () => {
+      for (let i = 0; i < cells.length - 1; i++) {
+        cells[i].textContent = oldValues[i];
+        cells[i].contentEditable = "false";
+        cells[i].classList.remove("bg-gray-700");
+      }
+      displayPayments(searchPayment.value);
+    });
+  });
+});
+
     }
 
     addPaymentForm.addEventListener('submit', e => {
