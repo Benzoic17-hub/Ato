@@ -16,9 +16,10 @@
       background-position: center;
       background-attachment: fixed;
       min-height: 100vh;
+      color: black !important;
     }
     .container { animation: fadeIn 0.5s ease-in; }
-    .form-section { transition: transform 0.3s ease, opacity 0.3s ease; }
+    /* .form-section { transition: transform 0.3s ease, opacity 0.3s ease; } */
     .form-section.hidden { transform: translateX(20px); opacity: 0; position: absolute; pointer-events: none; }
     .form-section.visible { transform: translateX(0); opacity: 1; position: relative; pointer-events: auto; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -125,110 +126,98 @@
   </footer>
 
   <script>
-    // Dark mode toggle
-    document.getElementById('darkToggle').addEventListener('click', function() {
-      const container = document.querySelector('.container');
-      const isDark = !container.classList.contains('bg-gray-900');
-      container.classList.toggle('bg-white', !isDark);
-      container.classList.toggle('bg-gray-900', isDark);
-      document.body.classList.toggle('text-gray-900', !isDark);
-      document.body.classList.toggle('text-white', isDark);
 
-      // ✅ Add dark-mode class to body
-      document.body.classList.toggle('dark-mode', isDark);
+  // Toggle forms
+  const showSignInBtn = document.getElementById('showSignIn');
+  const showSignUpBtn = document.getElementById('showSignUp');
+  const signInSection = document.getElementById('signInSection');
+  const signUpSection = document.getElementById('signUpSection');
 
-      this.innerHTML = isDark ? '<i class="fas fa-sun mr-2"></i> Light Mode' : '<i class="fas fa-moon mr-2"></i> Dark Mode';
+  function toggleForms(showSignIn) {
+    showSignInBtn.classList.toggle('bg-indigo-600', showSignIn);
+    showSignInBtn.classList.toggle('bg-gray-200', !showSignIn);
+    showSignInBtn.classList.toggle('text-white', showSignIn);
+    showSignInBtn.classList.toggle('text-gray-700', !showSignIn);
+
+    showSignUpBtn.classList.toggle('bg-indigo-600', !showSignIn);
+    showSignUpBtn.classList.toggle('bg-gray-200', showSignIn);
+    showSignUpBtn.classList.toggle('text-white', !showSignIn);
+    showSignUpBtn.classList.toggle('text-gray-700', showSignIn);
+
+    signInSection.classList.toggle('hidden', !showSignIn);
+    signInSection.classList.toggle('visible', showSignIn);
+    signUpSection.classList.toggle('hidden', showSignIn);
+    signUpSection.classList.toggle('visible', !showSignIn);
+  }
+
+  showSignInBtn.addEventListener('click', () => toggleForms(true));
+  showSignUpBtn.addEventListener('click', () => toggleForms(false));
+
+  // Password toggle
+  function setupPasswordToggle(inputId, toggleId) {
+    const input = document.getElementById(inputId);
+    const toggle = document.getElementById(toggleId);
+    toggle.addEventListener('click', () => {
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      toggle.innerHTML = `<i class="fas ${isPassword ? 'fa-eye-slash' : 'fa-eye'}"></i>`;
     });
+  }
 
-    // Toggle forms
-    const showSignInBtn = document.getElementById('showSignIn');
-    const showSignUpBtn = document.getElementById('showSignUp');
-    const signInSection = document.getElementById('signInSection');
-    const signUpSection = document.getElementById('signUpSection');
+  setupPasswordToggle('signin-password', 'toggleSignInPassword');
+  setupPasswordToggle('password', 'toggleSignUpPassword');
+  setupPasswordToggle('confirm-password', 'toggleConfirmPassword');
 
-    function toggleForms(showSignIn) {
-      showSignInBtn.classList.toggle('bg-indigo-600', showSignIn);
-      showSignInBtn.classList.toggle('bg-gray-200', !showSignIn);
-      showSignInBtn.classList.toggle('text-white', showSignIn);
-      showSignInBtn.classList.toggle('text-gray-700', !showSignIn);
-      showSignUpBtn.classList.toggle('bg-indigo-600', !showSignIn);
-      showSignUpBtn.classList.toggle('bg-gray-200', showSignIn);
-      showSignUpBtn.classList.toggle('text-white', !showSignIn);
-      showSignUpBtn.classList.toggle('text-gray-700', showSignIn);
-      signInSection.classList.toggle('hidden', !showSignIn);
-      signInSection.classList.toggle('visible', showSignIn);
-      signUpSection.classList.toggle('hidden', showSignIn);
-      signUpSection.classList.toggle('visible', !showSignIn);
-    }
+  // Toast function
+  function showToast(message, isError = false) {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    toast.classList.remove('bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
+    toast.classList.add(isError ? 'bg-red-100' : 'bg-green-100', isError ? 'text-red-700' : 'text-green-700');
+    toastMessage.textContent = message;
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 3000);
+  }
 
-    showSignInBtn.addEventListener('click', () => toggleForms(true));
-    showSignUpBtn.addEventListener('click', () => toggleForms(false));
+  // Sign up
+  document.getElementById('signupForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+    const terms = document.getElementById('terms').checked;
 
-    // Password toggle
-    function setupPasswordToggle(inputId, toggleId) {
-      const input = document.getElementById(inputId);
-      const toggle = document.getElementById(toggleId);
-      toggle.addEventListener('click', () => {
-        const isPassword = input.type === 'password';
-        input.type = isPassword ? 'text' : 'password';
-        toggle.innerHTML = <i class="fas ${isPassword ? 'fa-eye-slash' : 'fa-eye'}"></i>;
-      });
-    }
+    if (!username || !email || !password || !confirmPassword) return showToast('All fields are required.', true);
+    if (!email.includes('@')) return showToast('Enter a valid email.', true);
+    if (password.length < 8) return showToast('Password must be at least 8 characters.', true);
+    if (password !== confirmPassword) return showToast('Passwords do not match.', true);
+    if (!terms) return showToast('You must accept the Terms.', true);
 
-    setupPasswordToggle('signin-password', 'toggleSignInPassword');
-    setupPasswordToggle('password', 'toggleSignUpPassword');
-    setupPasswordToggle('confirm-password', 'toggleConfirmPassword');
+    localStorage.setItem('username', username);
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
+    localStorage.setItem('profileName', username);
+    showToast('Sign Up Successful! You can now sign in.');
+    toggleForms(true);
+    this.reset();
+  });
 
-    // Toast function
-    function showToast(message, isError = false) {
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toastMessage');
-      toast.classList.remove('bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
-      toast.classList.add(isError ? 'bg-red-100' : 'bg-green-100', isError ? 'text-red-700' : 'text-green-700');
-      toastMessage.textContent = message;
-      toast.classList.remove('hidden');
-      setTimeout(() => toast.classList.add('hidden'), 3000);
-    }
+  // Sign in -> redirect to dashboard
+  document.getElementById('signinForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const username = document.getElementById('signin-username').value.trim();
+    const password = document.getElementById('signin-password').value;
+    const storedUsername = localStorage.getItem('username');
+    const storedPassword = localStorage.getItem('password');
 
-    // Sign up
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirm-password').value;
-      const terms = document.getElementById('terms').checked;
-
-      if (!username || !email || !password || !confirmPassword) return showToast('All fields are required.', true);
-      if (!email.includes('@')) return showToast('Enter a valid email.', true);
-      if (password.length < 8) return showToast('Password must be at least 8 characters.', true);
-      if (password !== confirmPassword) return showToast('Passwords do not match.', true);
-      if (!terms) return showToast('You must accept the Terms.', true);
-
-      localStorage.setItem('username', username);
-      localStorage.setItem('email', email);
-      localStorage.setItem('password', password);
+    if (username === storedUsername && password === storedPassword) {
       localStorage.setItem('profileName', username);
-      showToast('Sign Up Successful! You can now sign in.');
-      toggleForms(true);
-      this.reset();
-    });
-
-    // Sign in -> redirect to dashboard
-    document.getElementById('signinForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('signin-username').value.trim();
-      const password = document.getElementById('signin-password').value;
-      const storedUsername = localStorage.getItem('username');
-      const storedPassword = localStorage.getItem('password');
-
-      if (username === storedUsername && password === storedPassword) {
-        localStorage.setItem('profileName', username);
-        window.location.href = 'dashboard.html';
-      } else {
-        showToast('Incorrect username or password', true);
-      }
-    });
+      window.location.href = 'dashboard.html';
+    } else {
+      showToast('Incorrect username or password', true);
+    }
+  });
   </script>
 </body>
 </html>
