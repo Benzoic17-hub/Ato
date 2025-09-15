@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +24,19 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .toast { animation: slideIn 0.5s ease forwards; }
     @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* ✅ Dark mode styles for input fields */
+    .dark-mode input,
+    .dark-mode select,
+    .dark-mode textarea {
+      background-color: rgba(30, 30, 30, 0.6); /* dark glass effect */
+      color: #fff; /* white text */
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .dark-mode input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-center items-center text-gray-900">
@@ -119,14 +133,10 @@
       container.classList.toggle('bg-gray-900', isDark);
       document.body.classList.toggle('text-gray-900', !isDark);
       document.body.classList.toggle('text-white', isDark);
-      document.querySelectorAll('.text-gray-700').forEach(el => {
-        el.classList.toggle('text-gray-700', !isDark);
-        el.classList.toggle('text-gray-200', isDark);
-      });
-      document.querySelectorAll('.text-gray-600').forEach(el => {
-        el.classList.toggle('text-gray-600', !isDark);
-        el.classList.toggle('text-gray-300', isDark);
-      });
+
+      // ✅ Add dark-mode class to body
+      document.body.classList.toggle('dark-mode', isDark);
+
       this.innerHTML = isDark ? '<i class="fas fa-sun mr-2"></i> Light Mode' : '<i class="fas fa-moon mr-2"></i> Dark Mode';
     });
 
@@ -161,7 +171,7 @@
       toggle.addEventListener('click', () => {
         const isPassword = input.type === 'password';
         input.type = isPassword ? 'text' : 'password';
-        toggle.innerHTML = `<i class="fas ${isPassword ? 'fa-eye-slash' : 'fa-eye'}"></i>`;
+        toggle.innerHTML = <i class="fas ${isPassword ? 'fa-eye-slash' : 'fa-eye'}"></i>;
       });
     }
 
