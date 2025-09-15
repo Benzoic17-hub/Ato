@@ -56,111 +56,140 @@
       <h1 class="text-lg font-semibold">Members</h1>
       <a href="index.html" class="text-red-400 hover:text-red-600">Logout</a>
     </header>
+<!-- Search -->
+<section class="bg-black bg-opacity-50 p-4 rounded-lg shadow">
+  <input id="searchMember" type="text" placeholder="Search member by name..."
+    class="p-2 rounded w-full bg-gray-800 border border-gray-700 text-white">
+</section>
 
-    <!-- Add Member Form -->
-    <section class="bg-black bg-opacity-50 p-4 rounded-lg shadow">
-      <h2 class="text-xl font-bold mb-2">Add Member</h2>
-      <form id="addMemberForm" class="grid grid-cols-1 md:grid-cols-4 gap-2 items-end">
-        <input type="text" id="memberName" placeholder="Name" class="p-2 rounded bg-gray-800 border border-gray-700" required>
-        <input type="date" id="memberDate" class="p-2 rounded bg-gray-800 border border-gray-700" required>
-        <input type="text" id="memberDesc" placeholder="Description" class="p-2 rounded bg-gray-800 border border-gray-700" required>
-        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded col-span-1 md:col-span-1">Add</button>
-      </form>
-    </section>
+   <!-- Add Member Form -->
+<section class="bg-black bg-opacity-50 p-4 rounded-lg shadow">
+  <h2 class="text-xl font-bold mb-2">Add Member</h2>
+  <form id="addMemberForm" class="grid grid-cols-1 md:grid-cols-5 gap-2 items-end">
+    <input type="text" id="memberNo" placeholder="Number/ID" class="p-2 rounded bg-gray-800 border border-gray-700" required>
+    <input type="text" id="memberName" placeholder="Name" class="p-2 rounded bg-gray-800 border border-gray-700" required>
+    <input type="date" id="memberDate" class="p-2 rounded bg-gray-800 border border-gray-700" required>
+    <input type="text" id="memberDesc" placeholder="Description" class="p-2 rounded bg-gray-800 border border-gray-700" required>
+    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded">Add</button>
+  </form>
+</section>
 
-    <!-- Search -->
-    <section class="bg-black bg-opacity-50 p-4 rounded-lg shadow">
-      <input type="text" id="searchInput" placeholder="Search member by name..." class="p-2 rounded w-full bg-gray-800 border border-gray-700">
-    </section>
+<!-- Members Table -->
+<section class="bg-black bg-opacity-50 p-4 rounded-lg shadow overflow-auto">
+  <table class="w-full table-auto text-white">
+    <thead>
+      <tr class="border-b border-gray-600">
+        <th class="p-2 text-left">No</th>
+        <th class="p-2 text-left">Name</th>
+        <th class="p-2 text-left">Date</th>
+        <th class="p-2 text-left">Description</th>
+        <th class="p-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="membersTableBody">
+      <!-- Members will be displayed here -->
+    </tbody>
+  </table>
+</section>
 
-    <!-- Members Table -->
-    <section class="bg-black bg-opacity-50 p-4 rounded-lg shadow overflow-auto">
-      <table class="w-full table-auto text-white">
-        <thead>
-          <tr class="border-b border-gray-600">
-            <th class="p-2 text-left">Name</th>
-            <th class="p-2 text-left">Date</th>
-            <th class="p-2 text-left">Description</th>
-            <th class="p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="membersTableBody">
-          <!-- Members will be displayed here -->
-        </tbody>
-      </table>
-    </section>
+<script>
+  let members = JSON.parse(localStorage.getItem('members')) || [];
+  const membersTableBody = document.getElementById('membersTableBody');
+  const addMemberForm = document.getElementById('addMemberForm');
 
-  </div>
+  function displayMembers() {
+    membersTableBody.innerHTML = '';
+    members.forEach((member, index) => {
+      const tr = document.createElement('tr');
+      tr.classList.add('border-b', 'border-gray-600');
+      tr.innerHTML = `
+        <td class="p-2" contenteditable="false">${member.no}</td>
+        <td class="p-2" contenteditable="false">${member.name}</td>
+        <td class="p-2" contenteditable="false">${member.date}</td>
+        <td class="p-2" contenteditable="false">${member.desc}</td>
+        <td class="p-2 flex gap-2 justify-center">
+          <button class="bg-yellow-500 hover:bg-yellow-600 text-black px-2 rounded editBtn">Edit</button>
+          <button class="bg-green-500 hover:bg-green-600 text-white px-2 rounded saveBtn hidden">Save</button>
+          <button class="bg-gray-500 hover:bg-gray-600 text-white px-2 rounded cancelBtn hidden">Cancel</button>
+          <button class="bg-red-600 hover:bg-red-700 text-white px-2 rounded deleteBtn">Delete</button>
+        </td>
+      `;
+      membersTableBody.appendChild(tr);
 
-  <script>
-    // Load members from localStorage
-    let members = JSON.parse(localStorage.getItem('members')) || [];
+      const cells = tr.querySelectorAll("td[contenteditable]");
+      const editBtn = tr.querySelector(".editBtn");
+      const saveBtn = tr.querySelector(".saveBtn");
+      const cancelBtn = tr.querySelector(".cancelBtn");
+      const deleteBtn = tr.querySelector(".deleteBtn");
 
-    const membersTableBody = document.getElementById('membersTableBody');
-    const addMemberForm = document.getElementById('addMemberForm');
-    const searchInput = document.getElementById('searchInput');
+      let oldValues = [];
 
-    function displayMembers(filter = '') {
-      membersTableBody.innerHTML = '';
-      members.filter(m => m.name.toLowerCase().includes(filter.toLowerCase())).forEach((member, index) => {
-        const tr = document.createElement('tr');
-        tr.classList.add('border-b','border-gray-600');
-        tr.innerHTML = `
-          <td class="p-2">${member.name}</td>
-          <td class="p-2">${member.date}</td>
-          <td class="p-2">${member.desc}</td>
-          <td class="p-2 flex gap-2 justify-center">
-            <button class="bg-yellow-500 hover:bg-yellow-600 text-black px-2 rounded editBtn" data-index="${index}"><i class="fas fa-edit"></i></button>
-            <button class="bg-red-600 hover:bg-red-700 px-2 rounded deleteBtn" data-index="${index}"><i class="fas fa-trash"></i></button>
-          </td>
-        `;
-        membersTableBody.appendChild(tr);
-      });
-      setupButtons();
-    }
-
-    function setupButtons() {
-      document.querySelectorAll('.deleteBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const index = btn.dataset.index;
-          members.splice(index,1);
-          localStorage.setItem('members', JSON.stringify(members));
-          displayMembers(searchInput.value);
+      editBtn.addEventListener("click", () => {
+        oldValues = [...cells].map(cell => cell.textContent);
+        cells.forEach(cell => {
+          cell.contentEditable = "true";
+          cell.classList.add("bg-gray-700");
         });
+        editBtn.classList.add("hidden");
+        saveBtn.classList.remove("hidden");
+        cancelBtn.classList.remove("hidden");
       });
 
-      document.querySelectorAll('.editBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const index = btn.dataset.index;
-          const member = members[index];
-          const newName = prompt('Edit Name', member.name);
-          const newDate = prompt('Edit Date', member.date);
-          const newDesc = prompt('Edit Description', member.desc);
-          if(newName && newDate && newDesc){
-            members[index] = {name:newName, date:newDate, desc:newDesc};
-            localStorage.setItem('members', JSON.stringify(members));
-            displayMembers(searchInput.value);
-          }
+      saveBtn.addEventListener("click", () => {
+        cells.forEach(cell => {
+          cell.contentEditable = "false";
+          cell.classList.remove("bg-gray-700");
         });
+        members[index] = {
+          no: tr.children[0].textContent,
+          name: tr.children[1].textContent,
+          date: tr.children[2].textContent,
+          desc: tr.children[3].textContent
+        };
+        localStorage.setItem('members', JSON.stringify(members));
+        editBtn.classList.remove("hidden");
+        saveBtn.classList.add("hidden");
+        cancelBtn.classList.add("hidden");
       });
-    }
 
-    addMemberForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const name = document.getElementById('memberName').value.trim();
-      const date = document.getElementById('memberDate').value;
-      const desc = document.getElementById('memberDesc').value.trim();
-      members.push({name,date,desc});
-      localStorage.setItem('members', JSON.stringify(members));
-      addMemberForm.reset();
-      displayMembers(searchInput.value);
+      cancelBtn.addEventListener("click", () => {
+        cells.forEach((cell, i) => {
+          cell.textContent = oldValues[i];
+          cell.contentEditable = "false";
+          cell.classList.remove("bg-gray-700");
+        });
+        editBtn.classList.remove("hidden");
+        saveBtn.classList.add("hidden");
+        cancelBtn.classList.add("hidden");
+      });
+
+      deleteBtn.addEventListener("click", () => {
+        members.splice(index, 1);
+        localStorage.setItem('members', JSON.stringify(members));
+        displayMembers();
+      });
     });
+  }
 
-    searchInput.addEventListener('input', () => displayMembers(searchInput.value));
-
-    // Initial display
+  addMemberForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const no = document.getElementById('memberNo').value.trim();
+    const name = document.getElementById('memberName').value.trim();
+    const date = document.getElementById('memberDate').value;
+    const desc = document.getElementById('memberDesc').value.trim();
+    members.push({ no, name, date, desc });
+    localStorage.setItem('members', JSON.stringify(members));
+    addMemberForm.reset();
     displayMembers();
-  </script>
+  });
+
+
+      
+
+
+  displayMembers();
+</script>
+
 
 </body>
 </html>
