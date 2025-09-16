@@ -254,7 +254,7 @@
 
       if (username === storedUsername && password === storedPassword) {
         localStorage.setItem('profileName', username);
-        window.location.href = 'dashboard.html';
+        window.location.href = './dashboard.html';
       } else {
         showToast('Incorrect username or password', true);
       }
